@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
@@ -11,9 +10,11 @@ import NavbarMobileMenu from "./NavbarMobileMenu";
 
 interface NavbarProps {
   items?: NavItem[];
+  ctaLabel?: string;
+  ctaHref?: string;
 }
 
-export default function Navbar({ items }: NavbarProps) {
+export default function Navbar({ items, ctaLabel, ctaHref }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const navItems =
     items ??
@@ -33,8 +34,8 @@ export default function Navbar({ items }: NavbarProps) {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex">
-              <NavbarActions />
+            <div className="md:flex">
+              <NavbarActions ctaLabel={ctaLabel} ctaHref={ctaHref} />
             </div>
             <Button
               variant="ghost"
