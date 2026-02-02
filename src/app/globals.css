@@ -27,3 +27,13 @@ body {
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
     "Noto Color Emoji";
 }
+
+@layer utilities {
+  .theme-surface {
+    @apply bg-white text-black dark:bg-black dark:text-zinc-50;
+  }
+  .darkmode {
+    @apply bg-white text-gray-500 dark:bg-black dark:text-zinc-50;
+  }
+
+}
