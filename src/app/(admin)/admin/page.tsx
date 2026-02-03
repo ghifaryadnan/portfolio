@@ -1,7 +1,10 @@
-export default function AdminHomePage() {
+ 
+
+ export default function AdminHomePage() {
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-    </div>
+    <section className="space-y-4">
+      <div className="text-2xl font-semibold">Selamat datang, Admin</div>
+      <p className="text-sm text-zinc-500">Gunakan sidebar untuk navigasi.</p>
+    </section>
   );
-}
+ }
