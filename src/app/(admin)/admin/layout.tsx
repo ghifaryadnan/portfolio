@@ -1,5 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+ import { getSupabaseClient } from "@/lib/supabase/client";
 import {
   Card,
   CardContent,
@@ -21,6 +24,17 @@ export default function AdminLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const router = useRouter();
+
+  async function onLogout() {
+    const supabase = await getSupabaseClient();
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
+    await fetch("/api/admin/logout", { method: "POST", credentials: "include" });
+    router.replace("/admin");
+    router.refresh();
+  }
   return (
     <div className="flex min-h-screen">
       <aside className="hidden md:flex w-64 flex-col border-r border-zinc-200 dark:border-zinc-800">
@@ -40,7 +54,7 @@ export default function AdminLayout({
           </a>
         </nav>
         <div className="p-4">
-          <Button variant="secondary" className="w-full">
+          <Button variant="secondary" className="w-full" onClick={onLogout}>
             <LogOut className="h-4 w-4 mr-2" />
             Logout
           </Button>
@@ -55,14 +69,12 @@ export default function AdminLayout({
             <span className="font-semibold">Dashboard</span>
           </div>
           <div className="flex items-center gap-3">
-            <input
-              className="hidden md:block border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black px-3 py-2 rounded w-64"
-              placeholder="Search"
-            />
+            <Input className="hidden md:block w-64" placeholder="Search" />
             <Button>New Project</Button>
           </div>
         </header>
         <main className="p-6 space-y-6">
+          {children}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card>
               <CardHeader>
@@ -129,7 +141,6 @@ export default function AdminLayout({
               </CardFooter>
             </Card>
           </div>
-          {children}
         </main>
       </div>
     </div>
