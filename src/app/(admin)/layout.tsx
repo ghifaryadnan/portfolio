@@ -14,8 +14,7 @@ export default async function AdminGroupLayout({
     .includes("admin_auth=true");
   if (!authed) {
     return (
-      <main className="flex min-h-screen items-center justify-center p-6">
-        
+      <main className="flex min-h-screen bg-black items-center justify-center p-6">
         <AdminLoginForm />
       </main>
     );
