@@ -12,7 +12,7 @@ export default function NavbarMobileMenu({
 }) {
   if (!open) return null;
   return (
-    <div className="md:hidden border-t border-zinc-200 dark:border-zinc-800">
+    <div className="md:hidden border-t border-zinc-200 dark:border-zinc-800" onClick={onClose}>
       <div className="px-4 py-3">
         <NavbarLinks items={items} />
       </div>

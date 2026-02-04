@@ -1,16 +1,16 @@
  "use client";
 import { useQuery } from "@tanstack/react-query";
-import { getSkills } from "@/services/skills.service";
+import { getSkills, type Skill } from "@/services/skills.service";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function SkillsSection() {
-  const { data: skills = [], isLoading, error } = useQuery({
+  const { data: skills = [], isLoading, error } = useQuery<Skill[]>({
     queryKey: ["skills"],
     queryFn: getSkills,
   });
 
   const grouped = Object.entries(
-    (skills as any[]).reduce((acc: Record<string, any[]>, s: any) => {
+    skills.reduce((acc: Record<string, Skill[]>, s: Skill) => {
       const cat = s?.category ?? "Other";
       acc[cat] = acc[cat] ? [...acc[cat], s] : [s];
       return acc;
@@ -48,7 +48,7 @@ export default function SkillsSection() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {grouped.map(([category, items]) => {
-              const names = (items as any[]).map((it) => it?.name ?? it?.title ?? "Skill");
+              const names = (items as Skill[]).map((it) => it?.name ?? "Skill");
               return (
                 <Card key={category}>
                   <CardHeader>

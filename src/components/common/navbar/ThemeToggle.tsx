@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 
 export default function ThemeToggle() {
   const [dark, setDark] = useState(false);
+  const [mounted, setMounted] = useState(false);
   useEffect(() => {
     const stored = localStorage.getItem("theme");
     const prefers = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const isDark = stored ? stored === "dark" : prefers;
-    setDark(isDark);
-    document.documentElement.classList.toggle("dark", isDark);
+    const next = stored ? stored === "dark" : prefers;
+    setDark(next);
+    setMounted(true);
+    document.documentElement.classList.toggle("dark", next);
   }, []);
   return (
     <Button
@@ -24,7 +26,9 @@ export default function ThemeToggle() {
         document.documentElement.classList.toggle("dark", next);
       }}
     >
-      {dark ? <SunMedium className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+      {mounted ? (dark ? <SunMedium className="h-5 w-5" /> : <Moon className="h-5 w-5" />) : (
+        <Moon className="h-5 w-5" />
+      )}
     </Button>
   );
 }
